@@ -1,0 +1,30 @@
+<html>
+  <head></head>
+  <body>
+    <p>response</p>
+    <!-- minute_summary: minute_summary, minute_icon: minute_icon, daily_summary:daily_summary, daily_icon:daily_icon, hourly_summary:hourly_summary, hourly_icon:hourly_icon, currently_summary:currently_summary, currently_icon:currently_icon, currently_temp:currently_temp -->
+
+    <h2>Currently</h2><p>{{currently_temp}}</p>
+
+    <figure class="icons">
+      <canvas id="clear-night" width="64" height="64">
+      </canvas>
+    </figure>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../skycons.js"></script>
+    <script>
+      var icons = new Skycons(),
+          list  = [
+            "clear-day", "clear-night", "partly-cloudy-day",
+            "partly-cloudy-night", "cloudy", "rain", "sleet", "snow", "wind",
+            "fog"
+          ],
+          i;
+
+      for(i = list.length; i--; )
+        icons.set(list[i], list[i]);
+
+      icons.play();
+    </script>
+  </body>
+</html>
