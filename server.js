@@ -1,15 +1,12 @@
 var request = require('request')
-const importEnv = require('import-env') //documentaiton: https://www.npmjs.com/package/import-env
-
-const {
-  PORT,
-  GKEY,
-  DARKSKYKEY,
-  DB
-} = require('./config') //import env via config file
-
-DB='postgres://postgres:ba026846395d0d38eca1dec939f46d34@dokku-postgres-wifipwdb:5432/wifipwdb'
-console.log(DB)
+// const importEnv = require('import-env') //documentaiton: https://www.npmjs.com/package/import-env
+//
+// const {
+//   PORT,
+//   GKEY,
+//   DARKSKYKEY,
+//   DB
+// } = require('./config') //import env via config file
 
 var axios = require('axios')
 var express = require('express')
@@ -20,6 +17,9 @@ var app = express()
 var pgp = require('pg-promise')({});
 var db = pgp(DB)
 var port = process.env.PORT || 8000;
+var GKEY = process.env.GOOGLE_API_KEY
+var DARKSKYKEY = process.env.DARK_SKY_API_KEY
+
 // create application/json parser
 var jsonParser = bodyParser.json()
 
@@ -107,6 +107,6 @@ app.post('/results', function(req, res, next) {
     })
 });
 
-app.listen(8888, function(){
+app.listen(port, function(){
   console.log('listening on port' + port)
 });
