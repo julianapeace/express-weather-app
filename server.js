@@ -7,6 +7,9 @@ var request = require('request')
 //   DARKSKYKEY,
 //   DB
 // } = require('./config') //import env via config file
+var GKEY = process.env.GOOGLE_API_KEY
+var DARKSKYKEY = process.env.DARK_SKY_API_KEY
+var DB = process.env.DB
 
 var axios = require('axios')
 var express = require('express')
@@ -17,8 +20,6 @@ var app = express()
 var pgp = require('pg-promise')({});
 var db = pgp(DB)
 var port = process.env.PORT || 8000;
-var GKEY = process.env.GOOGLE_API_KEY
-var DARKSKYKEY = process.env.DARK_SKY_API_KEY
 
 // create application/json parser
 var jsonParser = bodyParser.json()
