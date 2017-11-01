@@ -29,6 +29,8 @@ nunjucks.configure(TEMPLATES_PATH, {
   autoescape: true,
   express: app
 });
+//set static folder
+app.use(express.static('public'));
 
 app.get('/', function(req, res) {
   res.render('index.html');
@@ -60,6 +62,7 @@ app.post('/', urlencodedParser, function (req, res) {
       var currently_summary = response.data.currently.summary
       var currently_icon = response.data.currently.icon
       var currently_temp = response.data.currently.temperature
+      //pass it all into html file
       return res.render('response.html', {minute_summary: minute_summary, minute_icon: minute_icon, daily_summary:daily_summary, daily_icon:daily_icon, hourly_summary:hourly_summary, hourly_icon:hourly_icon, currently_summary:currently_summary, currently_icon:currently_icon, currently_temp:currently_temp})
     })
   })
@@ -71,9 +74,13 @@ app.post('/', urlencodedParser, function (req, res) {
 })
 
 
-app.get('/results', function(req, res) {
-
-  res.render('response.html');
+app.post('/results', function(req, res) {
+  const wifiPassword = require('wifi-password');
+  wifiPassword()
+    .then(password => {
+      console.log(password);
+  });
+  // res.render('response.html');
 })
 
 app.listen(8888, function(){

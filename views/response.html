@@ -1,17 +1,60 @@
 <html>
-  <head></head>
+  <head>
+    <link rel="stylesheet" href="/css/master.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  </head>
   <body>
-    <p>response</p>
-    <!-- minute_summary: minute_summary, minute_icon: minute_icon, daily_summary:daily_summary, daily_icon:daily_icon, hourly_summary:hourly_summary, hourly_icon:hourly_icon, currently_summary:currently_summary, currently_icon:currently_icon, currently_temp:currently_temp -->
 
-    <h2>Currently</h2><p>{{currently_temp}}</p>
 
-    <figure class="icons">
-      <canvas id="clear-night" width="64" height="64">
-      </canvas>
-    </figure>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-3 col-md-3 col-sm-3">
+  <h2>Currently</h2><p>{{currently_temp}}</p><p>{{curcurrently_summary}}</p>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-3">
+      <h2>Minute</h2><p>{{minute_summary}}</p>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-3">
+      <h2>Hourly</h2><p>{{hourly_summary}}</p>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-3">
+      <h2>Daily</h2><p>{{daily_summary}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-3 col-md-3 col-sm-3">
+      <figure class="icons">
+        <canvas id="{{currently_icon}}" width="64" height="64">
+        </canvas>
+      </figure>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-3">
+      <figure class="icons">
+        <canvas id="{{hourly_icon}}" width="64" height="64">
+        </canvas>
+      </figure>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-3">
+      <figure class="icons">
+        <canvas id="{{daily_icon}}" width="64" height="64">
+        </canvas>
+      </figure>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-3">
+      <figure class="icons">
+        <canvas id="{{minute_icon}}" width="64" height="64">
+        </canvas>
+      </figure>
+    </div>
+  </div>
+</div>
+
+<form action="/results" method="POST">
+  <input type="submit" value="do shit">
+</form>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="../skycons.js"></script>
+    <script src="js/skycons.js"></script>
     <script>
       var icons = new Skycons(),
           list  = [
@@ -26,5 +69,8 @@
 
       icons.play();
     </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
   </body>
 </html>
