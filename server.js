@@ -19,7 +19,7 @@ var bodyParser = require('body-parser')
 var app = express()
 var pgp = require('pg-promise')({});
 var db = pgp(DB)
-
+var port = process.env.PORT || 8000;
 // create application/json parser
 var jsonParser = bodyParser.json()
 
@@ -108,5 +108,5 @@ app.post('/results', function(req, res, next) {
 });
 
 app.listen(8888, function(){
-  console.log('listening on port 8888')
+  console.log('listening on port' + port)
 });
