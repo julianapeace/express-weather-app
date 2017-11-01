@@ -1,2 +1,16 @@
-{{title}}
-{{name}}
+<h1>Hello {{name}}</h1>
+
+<!-- loops -->
+<p>
+  <ul>
+    {{#each friends}}
+    <li>{{name}}</li>
+    {{/each}}
+  </ul>
+</p>
+<!-- if statements -->
+<p>
+  {{#if age }}
+    you are {{age}}
+  {{/if}}
+</p>

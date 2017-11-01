@@ -14,6 +14,11 @@ const config = importEnv(
         name: 'DARK_SKY_API_KEY',
         alias: 'DARKSKYKEY',
         required: true
+    },
+    {
+        name: 'DB',
+        alias: 'DB',
+        required: true
     }
 )
 

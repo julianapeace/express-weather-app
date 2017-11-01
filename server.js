@@ -4,8 +4,12 @@ const importEnv = require('import-env') //documentaiton: https://www.npmjs.com/p
 const {
   PORT,
   GKEY,
-  DARKSKYKEY
+  DARKSKYKEY,
+  DB
 } = require('./config') //import env via config file
+
+DB='postgres://postgres:ba026846395d0d38eca1dec939f46d34@dokku-postgres-wifipwdb:5432/wifipwdb'
+console.log(DB)
 
 var axios = require('axios')
 var express = require('express')
@@ -13,6 +17,8 @@ var nunjucks = require('nunjucks')
 var request = require('request')
 var bodyParser = require('body-parser')
 var app = express()
+var pgp = require('pg-promise')({});
+var db = pgp(DB)
 
 // create application/json parser
 var jsonParser = bodyParser.json()
@@ -35,7 +41,23 @@ app.use(express.static('public'));
 app.get('/', function(req, res) {
   res.render('index.html');
 })
-
+app.get('/createdb', function(req, res, next){
+  var query = 'CREATE TABLE wifipw (id SERIAL NOT NULL, wifi_name TEXT NOT NULL, wifi_password TEXT NOT NULL)'
+  db.result(query)
+    .then(function(result){
+      console.log(result)
+    })
+    .catch(next)
+  res.send('success')
+});
+app.get('/db', function(req, res, next){
+  var query = 'SELECT * FROM wifipw'
+  db.any(query)
+    .then(function(result){
+      console.log(result)
+    })
+    .catch(next)
+});
 app.post('/', urlencodedParser, function (req, res) {
   if (!req.body) return res.sendStatus(400)
 
@@ -63,7 +85,7 @@ app.post('/', urlencodedParser, function (req, res) {
       var currently_icon = response.data.currently.icon
       var currently_temp = response.data.currently.temperature
       //pass it all into html file
-      return res.render('response.html', {minute_summary: minute_summary, minute_icon: minute_icon, daily_summary:daily_summary, daily_icon:daily_icon, hourly_summary:hourly_summary, hourly_icon:hourly_icon, currently_summary:currently_summary, currently_icon:currently_icon, currently_temp:currently_temp})
+      return res.render('response.hbs', {minute_summary: minute_summary, minute_icon: minute_icon, daily_summary:daily_summary, daily_icon:daily_icon, hourly_summary:hourly_summary, hourly_icon:hourly_icon, currently_summary:currently_summary, currently_icon:currently_icon, currently_temp:currently_temp})
     })
   })
   .catch(function (error) {
@@ -74,14 +96,16 @@ app.post('/', urlencodedParser, function (req, res) {
 })
 
 
-app.post('/results', function(req, res) {
+app.post('/results', function(req, res, next) {
   const wifiPassword = require('wifi-password');
   wifiPassword()
     .then(password => {
       console.log(password);
-  });
-  // res.render('response.html');
-})
+  })
+    .catch(function(){
+      res.redirect('/')
+    })
+});
 
 app.listen(8888, function(){
   console.log('listening on port 8888')
