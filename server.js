@@ -1,29 +1,55 @@
 var request = require('request')
-// const importEnv = require('import-env') //documentaiton: https://www.npmjs.com/package/import-env
-//
-// const {
-//   PORT,
-//   GKEY,
-//   DARKSKYKEY,
-//   DB
-// } = require('./config') //import env via config file
-var GKEY = process.env.GOOGLE_API_KEY
-var DARKSKYKEY = process.env.DARK_SKY_API_KEY
-var DB = process.env.DB
+const importEnv = require('import-env')
 
-var axios = require('axios')
-var express = require('express')
-var nunjucks = require('nunjucks')
-var request = require('request')
-var bodyParser = require('body-parser')
-var app = express()
-var pgp = require('pg-promise')({});
-var db = pgp(DB)
-var port = process.env.PORT || 8000;
+const {
+  PORT,
+  GKEY,
+  DARKSKYKEY,
+  DB
+} = require('./config')
+// var GKEY = process.env.GOOGLE_API_KEY
+// var DARKSKYKEY = process.env.DARK_SKY_API_KEY
+// var DB = process.env.DB
 
+const initOptions = {
+    // global event notification;
+    error: (error, e) => {
+        if (e.cn) {
+            // A connection-related error;
+            //
+            // Connections are reported back with the password hashed,
+            // for safe errors logging, without exposing passwords.
+            console.log('CN:', e.cn);
+            console.log('EVENT:', error.message || error);
+        }
+    }
+};
+
+const dns = require('dns');
+const axios = require('axios')
+const express = require('express')
+const nunjucks = require('nunjucks')
+const bodyParser = require('body-parser')
+const app = express()
+const pgp = require('pg-promise')(initOptions);
+const cn = {host: 'dokku-postgres-wifipwdb',
+    port: 5432,
+    database: 'wifipwdb',
+    user: 'postgres',
+    password: 'ba026846395d0d38eca1dec939f46d34'};
+const db = pgp(cn);
+const port = process.env.PORT || 8000;
+
+db.connect()
+    .then(obj => {
+        obj.done(); // success, release the connection;
+    })
+    .catch(error => {
+        console.log('ERROR:', error.message || error);
+    });
+// dns.lookup('dokku-postgres-wifipwdb:5432', console.log)
 // create application/json parser
 var jsonParser = bodyParser.json()
-
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
@@ -109,5 +135,5 @@ app.post('/results', function(req, res, next) {
 });
 
 app.listen(port, function(){
-  console.log('listening on port' + port)
+  console.log('listening on port ' + port)
 });
