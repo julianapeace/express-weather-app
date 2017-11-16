@@ -1,15 +1,9 @@
 var request = require('request')
-const importEnv = require('import-env')
-
-const {
-  PORT,
-  GKEY,
-  DARKSKYKEY,
-  DB
-} = require('./config')
-// var GKEY = process.env.GOOGLE_API_KEY
-// var DARKSKYKEY = process.env.DARK_SKY_API_KEY
-// var DB = process.env.DB
+const env = require('import-env')
+var GKEY = process.env.GOOGLE_API_KEY
+var DARKSKYKEY = process.env.DARK_SKY_API_KEY
+var DB = process.env.DB
+var cn = process.env.DATABASE_URL
 
 const initOptions = {
     // global event notification;
@@ -32,11 +26,6 @@ const nunjucks = require('nunjucks')
 const bodyParser = require('body-parser')
 const app = express()
 const pgp = require('pg-promise')(initOptions);
-const cn = {host: 'dokku-postgres-wifipwdb',
-    port: 5432,
-    database: 'wifipwdb',
-    user: 'postgres',
-    password: 'ba026846395d0d38eca1dec939f46d34'};
 const db = pgp(cn);
 const port = process.env.PORT || 8000;
 
