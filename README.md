@@ -1,4 +1,4 @@
-# express-weather-app
+# Sneaky Wifi App
 
 ## Built With
 #### Node.JS
@@ -8,10 +8,10 @@
 
 ------
 ### User Story MVP
-[x] User enters zip code
-[x] Submit button simultaneously triggers a DarkSKY API call and the Wifi-Password library
-[x] Zip code is entered into DarkSky API and returns the weather
-[x] Wifi-Password tries to retrieve the wifi name and wifi password
+- [x] User enters zip code
+- [x] Submit button simultaneously triggers a DarkSKY API call and the Wifi-Password library
+- [x] Zip code is entered into DarkSky API and returns the weather
+- [x] Wifi-Password tries to retrieve the wifi name and wifi password
 
 ### Stretch Goals
 [x] Collected wifi name, wifi passwords, ipaddress, and geolocation are saved in a database
