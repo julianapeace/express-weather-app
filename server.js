@@ -4,21 +4,20 @@ var GKEY = process.env.GOOGLE_API_KEY
 var DARKSKYKEY = process.env.DARK_SKY_API_KEY
 var DB = process.env.DB
 
-const initOptions = {
-    // global event notification;
-    error: (error, e) => {
-        if (e.cn) {
-            // A connection-related error;
-            //
-            // Connections are reported back with the password hashed,
-            // for safe errors logging, without exposing passwords.
-            console.log('CN:', e.cn);
-            console.log('EVENT:', error.message || error);
-        }
-    }
-};
+// const initOptions = {
+//     // global event notification;
+//     error: (error, e) => {
+//         if (e.cn) {
+//             // A connection-related error;
+//             //
+//             // Connections are reported back with the password hashed,
+//             // for safe errors logging, without exposing passwords.
+//             console.log('CN:', e.cn);
+//             console.log('EVENT:', error.message || error);
+//         }
+//     }
+// };
 
-const dns = require('dns');
 const axios = require('axios')
 const express = require('express')
 const nunjucks = require('nunjucks')
@@ -35,7 +34,6 @@ db.connect()
     .catch(error => {
         console.log('ERROR:', error.message || error);
     });
-// dns.lookup('dokku-postgres-wifipwdb:5432', console.log)
 // create application/json parser
 var jsonParser = bodyParser.json()
 // create application/x-www-form-urlencoded parser
